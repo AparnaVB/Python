@@ -1,0 +1,12 @@
+Python Native Data Types
+
+Important Native Data types are :
+
+ - Boolean(True, False)
+ - Numbers
+ - Strings
+ - Bytes
+ - Lists
+ - Tuples
+ - Sets
+ - Dictionaries
