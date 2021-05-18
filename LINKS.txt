@@ -1,0 +1,2 @@
+https://diveintopython3.problemsolving.io/table-of-contents.html
+https://www.khanacademy.org/computing/computer-science/algorithms/recursive-algorithms/pc/challenge-iterative-factorial
