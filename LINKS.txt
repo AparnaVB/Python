@@ -1,2 +1,15 @@
 https://diveintopython3.problemsolving.io/table-of-contents.html
 https://www.khanacademy.org/computing/computer-science/algorithms/recursive-algorithms/pc/challenge-iterative-factorial
+https://spoken-tutorial.org/tutorial-search/?search_foss=Python%203.4.3&search_language=English&page=1
+https://towardsdatascience.com/best-practices-for-caching-in-spark-sql-b22fb0f02d34
+https://spark.apache.org/docs/latest/rdd-programming-guide.html#:~:text=By%20default%2C%20each%20transformed%20RDD,next%20time%20you%20query%20it.
+https://www.oreilly.com/library/view/data-analytics-with/9781491913734/ch04.html
+https://www.1keydata.com/datawarehousing/datawarehouse.html
+https://www.nuwavesolutions.com/snapshot-fact-tables/
+http://www.kimballgroup.com/wp-content/uploads/2013/08/2013.09-Kimball-Dimensional-Modeling-Techniques11.pdf
+http://dbis.cs.tu-dortmund.de/cms/de/lehre/ws1415/dw/slides/modelling.pdf
+https://medium.com/programminghero/learning-python-in-1-month-resources-beginner-study-plan-655fba3b5249
+https://www.quora.com/What-is-an-ideal-checklist-to-learn-Python-in-30-days
+https://www.khanacademy.org/computing/computer-science/algorithms/binary-search/a/binary-search
+https://www.khanacademy.org/computing/computer-science
+https://onlinedegree.iitm.ac.in/
