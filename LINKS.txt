@@ -33,9 +33,11 @@ sqlContext.conf.set("spark.sql.hive.convertMetastoreParquet","false")
 sqlContext.conf.set("spark.serializer", "org.apache.spark.serializer.KryoSerializer")
 sqlContext.conf.set('spark.kryoserializer.buffer.mb', '1000')
 sqlContext.conf.set('spark.kryoserializer.buffer.max', '1g') 
+sqlContext.conf.set("hive.exec.dynamic.partition.mode","nonstrict")
+sqlContext.conf.set("hive.exec.dynamic.partition","true")
 
 
-HIVE CONFIGURATIONS======================
+HIVE CONFIGURATIONS======================
 
 SET hive.exec.dynamic.partition=true;
 SET hive.exec.dynamic.partition.mode = nonstrict;
@@ -61,3 +63,49 @@ https://github.com/JerryLead/SparkInternals/blob/master/markdown/english/6-Cache
 https://medium.com/polar-tropics/improving-spark-job-performance-while-writing-parquet-by-300-40ccf487a6a5 
 https://journalofcloudcomputing.springeropen.com/articles/10.1186/s13677-014-0012-6 
 https://www.hackerearth.com/practice/algorithms/sorting/bubble-sort/practice-problems/algorithm/twisted-matrix/
+
+
+Performance optimization
+=======================
+from pyspark import StorageLevel
+df = spark.sql("abc")
+df.persist(StorageLevel.MEMORY_AND_DISK)
+df.createOrReplaceTempView('df1')
+
+
+Error Logging
+============
+import traceback
+print(traceback.format_exc())
+in finaly block - df.unpersist()
+
+
+UDF 
+===
+def abc():
+  return 'Y'
+
+abc_func = udf(abc, StringType()) # the second argument is the return type
+# how to use it
+df1 = df.withColumn('col_name', abc_func(arguments))
+
+
+CASE Statement
+==============
+df1= df.select(F.when(trim(df.col_name) == '', 'NULL').
+                                        when(col('col_name').isNull(), 'NULL').
+                                        otherwise(df.col_name).alias('col_name'))
+
+
+Saving a dataframe to table 
+==========================
+df.write.mode('overwrite').saveAsTable('tbl_name')
+
+
+With Clause and Lateral View Explode
+====================================
+df = sqlContext.sql("""with abc as (SELECT *
+                        array("val1","val2","val3","val4") as col_1
+                        FROM tbl_name)
+                        select  *,col_1_new from abc
+                        lateral view explode(col_1) acbTbl as col_1_new """)
