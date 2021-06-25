@@ -71,13 +71,13 @@ from pyspark import StorageLevel
 df = spark.sql("abc")
 df.persist(StorageLevel.MEMORY_AND_DISK)
 df.createOrReplaceTempView('df1')
+in finaly block - df.unpersist()
 
 
 Error Logging
 ============
 import traceback
 print(traceback.format_exc())
-in finaly block - df.unpersist()
 
 
 UDF 
