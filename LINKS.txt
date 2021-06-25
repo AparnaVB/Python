@@ -13,3 +13,51 @@ https://www.quora.com/What-is-an-ideal-checklist-to-learn-Python-in-30-days
 https://www.khanacademy.org/computing/computer-science/algorithms/binary-search/a/binary-search
 https://www.khanacademy.org/computing/computer-science
 https://onlinedegree.iitm.ac.in/
+
+
+pyspark  --driver-memory 10G --executor-memory 10G --executor-cores 5 --num-executors 10  --jars  jarpath/
+
+CSV LOAD VIA SPARK
+======================
+
+read_file = sqlContext.read.format("com.databricks.spark.csv").option("header", "true").option("inferSchema", "true").load("/user/gishrqa/events/DW_-_Hadoop_Employee_Data_-_For_Missing_Employees.csv").saveAsTable("hr_lz.missing_hc")
+
+read_file = sqlContext.read.format("com.databricks.spark.csv").option("header", "true").schema(customSchema).option("delimiter", ",").option('mode','PERMISSIVE').option("parserLib", "UNIVOCITY").load("/user/gishrqa/events/test_csv.csv").alias("read_file")
+
+
+Spark Settings
+================
+set spark.sql.hive.convertMetastoreParquet=false
+sqlContext.conf.set("spark.sql.hive.convertMetastoreParquet","false") 
+
+sqlContext.conf.set("spark.serializer", "org.apache.spark.serializer.KryoSerializer")
+sqlContext.conf.set('spark.kryoserializer.buffer.mb', '1000')
+sqlContext.conf.set('spark.kryoserializer.buffer.max', '1g') 
+
+
+HIVE CONFIGURATIONS======================
+
+SET hive.exec.dynamic.partition=true;
+SET hive.exec.dynamic.partition.mode = nonstrict;
+SET hive.vectorized.execution.enabled=true;
+SET hive.exec.parallel=true;
+set mapreduce.map.memory.mb=8192;
+set mapreduce.reduce.memory.mb=8192;
+set mapreduce.map.java.opts=-Xmx3276m;
+set mapreduce.reduce.java.opts=-Xmx3276m;
+
+set mapreduce.reduce.memory.mb=9000;
+set mapreduce.reduce.java.opts=-Xmx5276m;
+set mapreduce.map.java.opts=-Xmx5276m;
+set mapreduce.map.java.opts.max.heap=9000;
+set mapreduce.reduce.java.opts.max.heap=20240;
+set hive.optimize.sort.dynamic.partition=true; 
+SET mapred.child.java.opts=-Xmx4G -XX:+UseConcMarkSweepGC -XX:-UseGCOverheadLimit;
+
+https://0x0fff.com/ 
+https://developers.google.com/machine-learning/crash-course/ml-intro 
+https://github.com/vaquarkhan/problems-and-solutions/tree/master/bin/hackerrank1
+https://github.com/JerryLead/SparkInternals/blob/master/markdown/english/6-CacheAndCheckpoint.md 
+https://medium.com/polar-tropics/improving-spark-job-performance-while-writing-parquet-by-300-40ccf487a6a5 
+https://journalofcloudcomputing.springeropen.com/articles/10.1186/s13677-014-0012-6 
+https://www.hackerearth.com/practice/algorithms/sorting/bubble-sort/practice-problems/algorithm/twisted-matrix/
