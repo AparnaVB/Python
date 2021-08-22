@@ -109,3 +109,75 @@ df = sqlContext.sql("""with abc as (SELECT *
                         FROM tbl_name)
                         select  *,col_1_new from abc
                         lateral view explode(col_1) acbTbl as col_1_new """)
+                        
+                        
+The fair scheduler
+The fair scheduler is one of the most famous pluggable schedulers for large clusters. It enables memory-intensive applications to share cluster resources in a very efficient way. Fair scheduling is a policy that enables the allocation of resources to applications in a way that all applications get, on average, an equal share of the cluster resources over a given period.
+
+In a fair scheduling policy, if one application is running on the cluster, it might request all cluster resources for its execution, if needed. If other applications are submitted, the policy can distribute the free resources among the applications in such a way that each application gets a fairly equal share of cluster resources. A fair scheduler also follows a preemption where the ResourceManager might request the resource containers back from the ApplicationMaster, depending on the job configurations. It might be a healthy or an unhealthy preemption.
+
+In this scheduling model, every application is part of a queue, so resources are assigned to the queue. By default, each user shares the queue called 'Default Queue'. A fair scheduler supports many features at the queue level, such as assigning weight to the queue. A heavyweight queue would get a higher number of resources than lightweight queues, minimum and maximum shares that queue would get FIFO policy within the queue.
+
+While submitting the application, users might specify the name of the queue the application wants to use resources from. For example, if the application requires a higher number of resources, it can specify the heavyweight queue so that it can get all the required resources that are available there.
+
+The advantage of using the fair scheduling policy is that every queue would get a minimum share of the cluster resources. It is very important to note that when a queue contains applications that are waiting for the resources, they would get the minimum resource share. On the other hand, if the queues resources are more than enough for the application, then the excess amount would be distributed equally among the running applications.
+
+FAIR SCHEDULER CONFIGURATIONS
+To enable the fair scheduling policy in your YARN cluster, you need to specify the following property in the yarn-site.xml file:
+
+Another schedulers are FIFO and Capacity scheduler 
+
+
+What is mapper and reducer 
+
+Hadoop MapReduce (Hadoop Map/Reduce) is a software framework for distributed processing of large data sets on computing clusters. Mapreduce helps to  split the input data set into a number of parts and run a program on all data parts parallel at once.
+
+The first is the map operation, takes a set of data and converts it into another set of data, where individual elements are broken down into tuples (key/value pairs)
+
+Reduce Function reduces the set of tuples which share a key to a single tuple with a change in the value
+
+
+what is counters in yarn 
+
+A Counter in MapReduce is a mechanism used for collecting and measuring statistical information about MapReduce jobs and events.
+Counters keep the track of various job statistics in MapReduce like number of operations occurred and progress of the operation. Counters are used for Problem diagnosis in MapReduce.
+
+Hadoop Built-In counters:There are some built-in Hadoop counters which exist per job. Below are built-in counter groups-
+MapReduce Task Counters - Collects task specific information (e.g., number of input records) during its execution time.
+FileSystem Counters - Collects information like number of bytes read or written by a task
+FileInputFormat Counters - Collects information of a number of bytes read through FileInputFormat
+FileOutputFormat Counters - Collects information of a number of bytes written through FileOutputFormat
+Job Counters - These counters are used by JobTracker. Statistics collected by them include e.g., the number of task launched for a job.
+
+what is queue 
+scheduling in YARN.The capacity of each queue specifies the percentage of cluster resources that are available for applications submitted to the queue.Queues can be set up in a hierarchy that reflects the database structure, resource requirements, and access restrictions required by the various organizations, groups, and users that utilize cluster resources.
+
+
+HOW PRIORITY IS SET 
+conf.set("mapred.job.priority", JobPriority.VERY_HIGH.toString());
+SET mapred.job.priority=VERY_HIGH;
+
+WHAT IS JOB AND WHAT IS TASK 
+
+In terms of YARN, the programs that are being run on a cluster are called applications. In terms of MapReduce they are called jobs. So, if you are running MapReduce on YARN, job and application are the same thing (if you take a close look, job ids and application ids are the same).
+
+MapReduce job consists of several tasks (they could be either map or reduce tasks). If a task fails, it is launched again on another node. Those are task attempts.
+
+Container is a YARN term. This is a unit of resource allocation. For example, MapReduce task would be run in a single container.
+
+
+
+
+STATUS OF YARN APPLICATIONS
+
+Client contacts the Resource Manager and requests a new application ID. The RM sends back a application ID and total available resources. The application state is NEW.
+
+Client contacts the Resource Manager(RM) with the details of the application it wants to run. RM accepts the request and the status is moved to NEW_SAVING RM then saves the job info into its state store. The state is now SUBMITTED.
+
+RM then passes this info to the Scheduler. The scheduler a this stage will check if there are enough AM resources for the Queue and if the user has required permissions. If scheduler accepts the request, the application is moved to ACCEPTED The scheduler will schedule the application to be run. RM brokers and allocates resources for Application Master (AM) container and starts it. At this point the application has moved to RUNNING.
+
+From here on its the AM who co-ordinates with the RM to broker resources for required container resources and checks back periodically with RM about the current status.
+
+If the job finishes as expected, the status is set FINISHED otherwise FAILED.
+
+If the client kills the job in between, the status is set to KILLED.
